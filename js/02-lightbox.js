@@ -10,19 +10,9 @@ const markup = galleryItems.map(({ preview, original, description }) =>
 </li>`)
 
 container.insertAdjacentHTML('beforeend', markup.join(''));
-container.addEventListener('click', onClick)
-
-function onClick(event) {
-    event.preventDefault()
-    const { target } = event;
-    if (!target.classList.contains('gallery__image')) {
-        return
-    }
-    const lightbox = new SimpleLightbox('.gallery a', {
-        captionsData: 'alt',
-        captionType: 'attr',
-        captionPosition: 'bottom',
-        captionDelay: 250
-    });
-   
-}
+const lightbox = new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    captionType: 'attr',
+    captionPosition: 'bottom',
+    captionDelay: 250
+});

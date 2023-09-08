@@ -18,19 +18,34 @@ container.insertAdjacentHTML('beforeend', markup.join(''));
 container.addEventListener('click', onClick)
 
 function onClick(event) {
-    event.preventDefault()
+    event.preventDefault();
     const { target } = event;
     if (!target.classList.contains('gallery__image')) {
-        return
+        return;
     }
-    const largeImage = target.getAttribute('data-source')
+  
+    if (target.tagName !== 'IMG') {
+        return;
+    }
+
+    const largeImage = target.getAttribute('data-source');
     const instance = basicLightbox.create(
-        `<img src="${largeImage}" alt="${target.alt}">`
-    )
-    instance.show()
-    document.addEventListener('keydown', event => {
-      if (event.key === 'Escape') {
-        instance.close();
-      }
+        `<img src="${largeImage}" alt="${target.alt}">`, {
+        onShow: (instance) => {
+            window.addEventListener('keydown', onEscape);
+        },
+        onClose: (instance) => {
+            window.removeEventListener('keydown', onEscape);
+        }
     });
+
+    instance.show();
+
+    function onEscape(event) {
+        if (event.key === 'Escape') {
+            instance.close();
+        }
+    }
+
+    document.addEventListener('keydown', onEscape);
 }
