@@ -20,10 +20,6 @@ container.addEventListener('click', onClick)
 function onClick(event) {
     event.preventDefault();
     const { target } = event;
-    if (!target.classList.contains('gallery__image')) {
-        return;
-    }
-  
     if (target.tagName !== 'IMG') {
         return;
     }
